@@ -1,8 +1,13 @@
 const express = require('express'),
-    app = express();
+    app = express(),
+    engines = require('consolidate');
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
+app.engine('html', engines.nunjucks);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+
+app.get('/:name', (req, res) => {
+    res.render('hello', { name: req.params.name });
 });
 
 app.use((req, res) => {
