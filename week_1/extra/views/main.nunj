@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Movies</title>
+    <link href="app.css" rel="stylesheet">
 </head>
 <body>
     <h1>Hello</h1>

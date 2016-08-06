@@ -1,30 +1,15 @@
-const express = require('express'),
-    app = express(),
-    engines = require('consolidate'),
-    MongoClient = require('mongodb').MongoClient,
-    assert = require('assert');
+const MongoClient = require('mongodb').MongoClient,
+    assert = require('assert'),
+    config = require('./config'),
+    app = require('./app-config');
 
-const PORT = 3000;
-
-app.engine('nunj', engines.nunjucks);
-app.set('view engine', 'nunj');
-app.set('views', __dirname + '/views');
-
-const url = 'mongodb://localhost:27017/video';
-
-MongoClient.connect(url, (err, db) => {
+MongoClient.connect(config.URL, (err, db) => {
     assert.equal(null, err);
     console.log('Successfully connected to MongoDB');
 
-    app.get('/', (err, res) => {
-        res.render('main');
-    });
+    require('./routes')(app, db);
 
-    app.use((req, res) => {
-        res.sendStatus(404);
-    });
-
-    const server = app.listen(PORT, () => {
+    const server = app.listen(config.PORT, () => {
         const port = server.address().port;
         console.log(`Express server is listening on port ${port}`);
     });
