@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success</title>
+</head>
+<body>
+<h1>Inserted movie</h1>
+<h2> {{ movie.title  }}</h2>
+<button><a href="/">Go Back</a></button>
+</body>
+</html>
