@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Movies</title>
+    <script src="react.js" type="application/javascript"></script>
+    <script src="react-dom.js" type="application/javascript"></script>
+    <script src="output.js" type="application/javascript"></script>
     <link href="app.css" rel="stylesheet">
 </head>
 <body>

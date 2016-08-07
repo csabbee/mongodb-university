@@ -8,5 +8,6 @@ app.set('views', __dirname + '/views');
 
 
 app.use(express.static('stylesheets'));
+app.use(express.static('built'));
 
 module.exports = app;
