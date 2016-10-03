@@ -202,8 +202,15 @@ function ItemDAO(database) {
         * a SINGLE text index on title, slogan, and description. You should
         * simply do this in the mongo shell.
         */
-
-        callback(numItems);
+        this.db.collection('item').find({
+            $or: [
+                { title: { $regex: query, $options: ''}},
+                { slogan: { $regex: query, $options: ''}},
+                { description: { $regex: query, $options: ''}}
+            ]
+        }).count().then((numItems) => {
+            callback(numItems);
+        });
     };
 
 
