@@ -167,19 +167,21 @@ function ItemDAO(database) {
          * description. You should simply do this in the mongo shell.
          *
          */
+        var cursor = this.db.collection('item').find({
+            $or: [
+                { title: { $regex: query, $options: ''}},
+                { slogan: { $regex: query, $options: ''}},
+                { description: { $regex: query, $options: ''}}
+            ]
+        });
 
-        var item = this.createDummyItem();
-        var items = [];
-        for (var i=0; i<5; i++) {
-            items.push(item);
-        }
+        cursor.skip(page * itemsPerPage);
 
-        // TODO-lab2A Replace all code above (in this method).
+        cursor.limit(itemsPerPage);
 
-        // TODO Include the following line in the appropriate
-        // place within your code to pass the items for the selected page
-        // of search results to the callback.
-        callback(items);
+        cursor.toArray((err, result) => {
+            callback(result);
+        });
     };
 
 
