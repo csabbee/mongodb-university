@@ -113,10 +113,6 @@ function ItemDAO(database) {
         cursor.toArray((err, result) => {
             callback(result);
         });
-
-        function getCategory(category) {
-            return category === 'All' ? {} : { category: category };
-        }
     };
 
 
@@ -139,11 +135,10 @@ function ItemDAO(database) {
          * of a call to the getNumItems() method.
          *
          */
-
-         // TODO Include the following line in the appropriate
-         // place within your code to pass the count to the callback.
-        callback(numItems);
-    }
+        this.db.collection('item').count(getCategory(category)).then(numItems => {
+            callback(numItems);
+        });
+    };
 
 
     this.searchItems = function(query, page, itemsPerPage, callback) {
@@ -185,7 +180,7 @@ function ItemDAO(database) {
         // place within your code to pass the items for the selected page
         // of search results to the callback.
         callback(items);
-    }
+    };
 
 
     this.getNumSearchItems = function(query, callback) {
@@ -207,7 +202,7 @@ function ItemDAO(database) {
         */
 
         callback(numItems);
-    }
+    };
 
 
     this.getItem = function(itemId, callback) {
@@ -231,7 +226,7 @@ function ItemDAO(database) {
         // place within your code to pass the matching item
         // to the callback.
         callback(item);
-    }
+    };
 
 
     this.getRelatedItems = function(callback) {
@@ -277,7 +272,7 @@ function ItemDAO(database) {
         // place within your code to pass the updated doc to the
         // callback.
         callback(doc);
-    }
+    };
 
 
     this.createDummyItem = function() {
@@ -296,8 +291,11 @@ function ItemDAO(database) {
         };
 
         return item;
+    };
+
+    function getCategory(category) {
+        return category === 'All' ? {} : { category: category };
     }
 }
-
 
 module.exports.ItemDAO = ItemDAO;
